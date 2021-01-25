@@ -44,10 +44,10 @@ import rospy
 import numpy as np
 import cwiid
 
-from wiiutils import *
-from wiimoteExceptions import *
-from wiimoteConstants import *
-import wiistate
+from .wiiutils import *
+from .wiimoteExceptions import *
+from .wiimoteConstants import *
+from . import wiistate
 
 
 class WIIMote(object):
@@ -185,6 +185,10 @@ class WIIMote(object):
             try:
                 (factoryZero, factoryOne) = self.getNunchukFactoryCalibrationSettings()
                 self.setNunchukAccelerometerCalibration(factoryZero, factoryOne)
+            except:
+                rospy.loginfo("Error l189 in WIIMote.py")
+            finally:
+                pass
 
         time.sleep(0.2)
         self._wiiCallbackStack.push(self._steadyStateCallback)

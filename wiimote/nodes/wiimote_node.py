@@ -124,6 +124,8 @@ class WiimoteNode():
                 wiimoteDevice.setRumble(False)
                 wiimoteDevice.setLEDs([False, False, False, False])
                 wiimoteDevice.shutdown()
+            except:
+                rospy.loginfo("Error l128 in wiimote_node.py")
 
     def shutdown(self):
         try:
@@ -132,6 +134,9 @@ class WiimoteNode():
             WiiSender.stop
             NunSender.stop
             WiimoteListener.stop
+        except:
+            rospy.loginfo("Error l138 in wiimote_node.py")
+        pass
 
 
 class WiimoteDataSender(threading.Thread):
@@ -747,7 +752,7 @@ class WiimoteListeners(threading.Thread):
                             self.rumbleCommand = True
                         else:
                             self.rumbleCommand = False
-                    else IndexError:
+                    else:
                         rospy.logwarn("RUMBLE ID out of bounds, ignoring!")
 
             self.wiiMote.setLEDs(self.ledCommands)
@@ -793,19 +798,19 @@ if __name__ == '__main__':
 
     except rospy.ROSInterruptException:
         rospy.loginfo("ROS Shutdown Request.")
-    except KeyboardInterrupt, e:
+    except KeyboardInterrupt as e:
         rospy.loginfo("Received keyboard interrupt.")
-    except WiimoteNotFoundError, e:
+    except WiimoteNotFoundError as e:
         rospy.logfatal(str(e))
-    except WiimoteEnableError, e:
+    except WiimoteEnableError as e:
         rospy.logfatal(str(e))
-    except CallbackStackMultInstError, e:
+    except CallbackStackMultInstError as e:
         rospy.logfatal(str(e))
-    except CallbackStackEmptyError, e:
+    except CallbackStackEmptyError as e:
         rospy.logfatal(str(e))
-    except ResumeNonPausedError, e:
+    except ResumeNonPausedError as e:
         rospy.logfatal(str(e))
-    except CallbackStackEmptyError, e:
+    except CallbackStackEmptyError as e:
         rospy.logfatal(str(e))
 
     finally:
